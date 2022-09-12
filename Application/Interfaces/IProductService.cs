@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Product.DTO;
+
+namespace Application.Interfaces
+{
+    public interface IProductService
+    {
+        Task<List<ProductDTO>> Get();
+        Task<ProductDTO> Get(Guid id);
+        Task Create(ProductDTO productDto, CancellationToken token);
+        Task Update(ProductDTO productDto);
+        Task Delete(Guid id);
+    }
+}

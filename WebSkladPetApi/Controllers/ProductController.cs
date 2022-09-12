@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces;
+using Application.Product.DTO;
+using Application.Product.Services;
 using Domain.Entity;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -14,46 +17,26 @@ namespace WebSkladPetApi.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
-        private readonly WebSkladDbContext _context;
-
-        public ProductController(WebSkladDbContext context)
+        private readonly IProductService _service;
+        public ProductController(IProductService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            var products = await _context.Products.Include(c => c.Category).ToListAsync();
+            var products = await _service.Get();
             return Ok(products);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(ProductDTO productDto)
         {
-            var prod = new Product()
-            {
-                Id = Guid.NewGuid(),
-                Name = productDto.Name,
-                Description = productDto.Description,
-                CanBeGiven = productDto.CanBeGiven,
-                Count = productDto.Count,
-                CategoryId = productDto.CategoryId,
-            };
-
-            _context.Products.Add(prod);
-            await _context.SaveChangesAsync();
+            await _service.Create(productDto, CancellationToken.None);
             return Ok();
         }
 
     }
 
-    public class ProductDTO
-    {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool CanBeGiven { get; set; }
-        public int Count { get; set; }
-        public Guid CategoryId { get; set; }
-    }
 }
