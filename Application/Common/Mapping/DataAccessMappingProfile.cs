@@ -13,7 +13,8 @@ namespace Application.Common.Mapping
     {
         public DataAccessMappingProfile()
         {
-            CreateMap<ProductDTO, Domain.Entity.Product>().ReverseMap();
+            CreateMap<Domain.Entity.Product, ProductDTO>().ForMember(categoryName => categoryName.CategoryName,
+                opt => opt.MapFrom(product => product.Category.Name)).ReverseMap();
             CreateMap<CategoryDTO, Domain.Entity.Category>().ReverseMap();
         }
     }

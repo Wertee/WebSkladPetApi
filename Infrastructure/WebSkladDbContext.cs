@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class WebSkladDbContext : DbContext, IWebSkladDbContext
+    public class WebSkladDbContext : DbContext
     {
         public WebSkladDbContext(DbContextOptions<WebSkladDbContext> options) : base(options) { }
 

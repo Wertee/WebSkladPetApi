@@ -11,7 +11,7 @@ namespace Application.Interfaces
     {
         Task<List<ProductDTO>> Get();
         Task<ProductDTO> Get(Guid id);
-        Task Create(ProductDTO productDto, CancellationToken token);
+        Task Create(ProductDTO productDto);
         Task Update(ProductDTO productDto);
         Task Delete(Guid id);
     }

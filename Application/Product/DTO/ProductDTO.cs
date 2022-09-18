@@ -15,6 +15,6 @@ namespace Application.Product.DTO
         public bool CanBeGiven { get; set; }
         public int Count { get; set; }
         public Guid CategoryId { get; set; }
-        public CategoryDTO CategoryDTO { get; set; }
+        public string CategoryName { get; set; }
     }
 }

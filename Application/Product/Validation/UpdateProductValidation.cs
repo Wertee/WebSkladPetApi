@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application.Exceptions;
 using Application.Product.DTO;
 
 namespace Application.Product.Validation
 {
-    public class CreateProductValidation : ProductValidation
+    public class UpdateProductValidation : ProductValidation
     {
-        public CreateProductValidation(ProductDTO productDto) : base(productDto) { }
 
+        public UpdateProductValidation(ProductDTO productDto) : base(productDto)
+        {
 
+        }
         public override void Validate()
         {
             ValidateCount();

@@ -27,6 +27,7 @@ namespace WebSkladPetApi.Controllers
             return Ok(categories);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Post(Category category)
         {

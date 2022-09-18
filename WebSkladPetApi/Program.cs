@@ -1,7 +1,9 @@
 using Application.Common.Mapping;
 using Application.Interfaces;
 using Application.Product.Services;
+using Domain.Entity;
 using Infrastructure;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebSkladPetApi
@@ -20,8 +22,9 @@ namespace WebSkladPetApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<IWebSkladDbContext, WebSkladDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApi;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+            builder.Services.AddDbContext<WebSkladDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApi;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<DataAccessMappingProfile>();
