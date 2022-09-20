@@ -1,3 +1,4 @@
+using Application.Category.Services;
 using Application.Common.Mapping;
 using Application.Interfaces;
 using Application.Product.Services;
@@ -25,6 +26,8 @@ namespace WebSkladPetApi
             builder.Services.AddDbContext<WebSkladDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApi;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddProfile<DataAccessMappingProfile>();

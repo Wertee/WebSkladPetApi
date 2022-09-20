@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Exceptions;
+﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Product.DTO;
-using Application.Product.Services;
-using Domain.Entity;
-using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebSkladPetApi.Controllers
 {
@@ -34,8 +25,16 @@ namespace WebSkladPetApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> Get(Guid id)
         {
-            var productDto = await _service.Get(id);
-            return Ok(productDto);
+            try
+            {
+                var productDto = await _service.Get(id);
+                return Ok(productDto);
+            }
+            catch (ProductNotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+
         }
 
         [HttpPost]
@@ -55,6 +54,10 @@ namespace WebSkladPetApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(ProductDTO productDto)
         {
+            if (ModelState.IsValid!)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 await _service.Update(productDto);
@@ -63,6 +66,20 @@ namespace WebSkladPetApi.Controllers
             catch (ProductValidationException exception)
             {
                 return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _service.Delete(id);
+                return Ok();
+            }
+            catch (ProductNotFoundException exception)
+            {
+                return NotFound(exception.Message);
             }
         }
 

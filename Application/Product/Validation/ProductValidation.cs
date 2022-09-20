@@ -10,7 +10,7 @@ namespace Application.Product.Validation
 {
     public abstract class ProductValidation
     {
-        private ProductDTO _productDto;
+        private readonly ProductDTO _productDto;
 
         protected ProductValidation(ProductDTO productDto)
         {
@@ -26,5 +26,6 @@ namespace Application.Product.Validation
                 throw new ProductValidationException("Количество не должно быть меньше или равно нулю");
             }
         }
+
     }
 }

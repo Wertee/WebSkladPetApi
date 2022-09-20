@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Product.DTO;
 using Application.Product.Validation;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Product.Services
 {
@@ -29,7 +24,10 @@ namespace Application.Product.Services
 
         public async Task<ProductDTO> Get(Guid id)
         {
+
             var product = await _repository.Get(id);
+            if (product == null)
+                throw new ProductNotFoundException("Материал не найден");
             var productDto = _mapper.Map<Domain.Entity.Product, ProductDTO>(product);
             return productDto;
         }
@@ -58,6 +56,8 @@ namespace Application.Product.Services
         public async Task Delete(Guid id)
         {
             var product = await _repository.Get(id);
+            if (product == null)
+                throw new ProductNotFoundException("Материал не найден");
             await _repository.Delete(product);
         }
     }
