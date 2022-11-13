@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class CategoryRepository : IRepository<Category>
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly WebSkladDbContext _context;
 
@@ -47,6 +47,11 @@ namespace Infrastructure.Repository
         {
             _context.Categories.Remove(item);
             await _context.SaveChangesAsync();
+        }
+
+        public bool IsExist(Guid id)
+        {
+            return _context.Categories.Any(x => x.Id == id);
         }
     }
 }

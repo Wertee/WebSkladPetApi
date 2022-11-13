@@ -1,5 +1,5 @@
 ﻿using Application.Category.DTO;
-using Application.Category.Validation;
+using Application.Exceptions;
 using Application.Interfaces;
 using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,8 +41,6 @@ namespace WebSkladPetApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CategoryDTO categoryDto)
         {
-            //validation
-
             await _service.Create(categoryDto);
             return Ok();
         }

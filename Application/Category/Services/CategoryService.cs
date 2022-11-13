@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Category.DTO;
-using Application.Category.Validation;
+﻿using Application.Category.DTO;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 
@@ -12,10 +7,10 @@ namespace Application.Category.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository<Domain.Entity.Category> _repository;
+        private readonly ICategoryRepository _repository;
         private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Domain.Entity.Category> repository, IMapper mapper)
+        public CategoryService(ICategoryRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;

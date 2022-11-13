@@ -8,9 +8,9 @@ namespace Application.Product.Services
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Domain.Entity.Product> _repository;
+        private readonly IProductRepository _repository;
         private readonly IMapper _mapper;
-        public ProductService(IMapper mapper, IRepository<Domain.Entity.Product> repository)
+        public ProductService(IMapper mapper, IProductRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
@@ -38,18 +38,22 @@ namespace Application.Product.Services
             //validation
             var createProductValidation = new CreateProductValidation(productDto);
             createProductValidation.Validate();
-
             var product = _mapper.Map<ProductDTO, Domain.Entity.Product>(productDto);
             await _repository.Create(product);
         }
 
         public async Task Update(ProductDTO productDto)
         {
-            //validation
+
             var updateProductValidation = new UpdateProductValidation(productDto);
             updateProductValidation.Validate();
 
+            bool isProductExist = _repository.IsExist(productDto.Id);
+            if (!isProductExist)
+                throw new ProductNotFoundException("Материал не найден");
+
             var product = _mapper.Map<ProductDTO, Domain.Entity.Product>(productDto);
+
             await _repository.Update(product);
         }
 

@@ -14,7 +14,6 @@ namespace Domain.Entity
         public string Description { get; set; }
         public bool CanBeGiven { get; set; }
         public int Count { get; set; }
-
         public Guid CategoryId { get; set; }
         public Category? Category { get; set; }
     }

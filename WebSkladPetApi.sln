@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSkladPetApi", "WebSkladPetApi\WebSkladPetApi.csproj", "{8E8A8F5C-B5E5-4177-B333-77D83CFBCCCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSkladPetApi", "WebSkladPetApi\WebSkladPetApi.csproj", "{8E8A8F5C-B5E5-4177-B333-77D83CFBCCCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{96CCD6EB-05AA-44B9-A85C-E349E20CE1CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{96CCD6EB-05AA-44B9-A85C-E349E20CE1CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0111EF0B-1451-4F95-AC14-83DE47C25352}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{0111EF0B-1451-4F95-AC14-83DE47C25352}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{DBF9C43A-FF34-4A92-B0D1-A6B3E793B7A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{DBF9C43A-FF34-4A92-B0D1-A6B3E793B7A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{96ABB3A9-FE21-4A06-BE91-EF532ACCC808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{DBF9C43A-FF34-4A92-B0D1-A6B3E793B7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBF9C43A-FF34-4A92-B0D1-A6B3E793B7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBF9C43A-FF34-4A92-B0D1-A6B3E793B7A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96ABB3A9-FE21-4A06-BE91-EF532ACCC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96ABB3A9-FE21-4A06-BE91-EF532ACCC808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96ABB3A9-FE21-4A06-BE91-EF532ACCC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96ABB3A9-FE21-4A06-BE91-EF532ACCC808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

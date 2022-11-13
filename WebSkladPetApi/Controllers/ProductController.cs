@@ -54,10 +54,11 @@ namespace WebSkladPetApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(ProductDTO productDto)
         {
-            if (ModelState.IsValid!)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
             try
             {
                 await _service.Update(productDto);
@@ -66,6 +67,10 @@ namespace WebSkladPetApi.Controllers
             catch (ProductValidationException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (ProductNotFoundException exception)
+            {
+                return NotFound(exception.Message);
             }
         }
 
