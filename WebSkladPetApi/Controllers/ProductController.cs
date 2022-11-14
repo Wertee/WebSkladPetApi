@@ -27,7 +27,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                var productDto = await _service.Get(id);
+                var productDto = await _service.GetByIdAsync(id);
                 return Ok(productDto);
             }
             catch (ProductNotFoundException exception)

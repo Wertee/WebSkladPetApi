@@ -22,7 +22,7 @@ namespace Application.Product.Services
             return productsDto;
         }
 
-        public async Task<ProductDTO> Get(Guid id)
+        public async Task<ProductDTO> GetByIdAsync(Guid id)
         {
 
             var product = await _repository.Get(id);

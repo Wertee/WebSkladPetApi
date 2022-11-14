@@ -15,11 +15,11 @@ namespace Tests.ProductTests
     {
         public static ProductService CreateService(WebSkladDbContext context)
         {
-            var mockMapperConfiguration = new MapperConfiguration(cfg =>
+            var mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<DataAccessMappingProfile>();
             });
-            var mockMapper = mockMapperConfiguration.CreateMapper();
+            var mockMapper = mapperConfiguration.CreateMapper();
             var repo = new ProductRepository(context, mockMapper);
             var service = new ProductService(mockMapper, repo);
             return service;
