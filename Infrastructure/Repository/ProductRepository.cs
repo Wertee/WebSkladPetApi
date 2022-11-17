@@ -16,37 +16,36 @@ namespace Infrastructure.Repository
         private readonly WebSkladDbContext _context;
         private readonly IMapper _mapper;
 
-        public ProductRepository(WebSkladDbContext context, IMapper mapper)
+        public ProductRepository(WebSkladDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<List<Product>> GetAll()
+        public async Task<List<Product>> GetAllAsync()
         {
             var products = await _context.Products.Include(p => p.Category).ToListAsync();
             return products;
         }
 
-        public async Task<Product> Get(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
             var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
             return product;
         }
 
-        public async Task Create(Product item)
+        public async Task CreateAsync(Product item)
         {
             _context.Products.Add(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Product item)
+        public async Task UpdateAsync(Product item)
         {
             _context.Products.Update(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Product product)
+        public async Task DeleteAsync(Product product)
         {
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();

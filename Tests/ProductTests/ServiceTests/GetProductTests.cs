@@ -65,7 +65,7 @@ namespace Tests.ProductTests.ServiceTests
                 }
             };
 
-            _productRepoMock.Setup(x => x.GetAll()).ReturnsAsync(mockProducts);
+            _productRepoMock.Setup(x => x.GetAllAsync()).ReturnsAsync(mockProducts);
 
             //Act
             var products = await _service.Get();
@@ -87,7 +87,7 @@ namespace Tests.ProductTests.ServiceTests
                 Id = productId,
                 Name = "Мышь",
             };
-            _productRepoMock.Setup(x => x.Get(productId)).ReturnsAsync(product);
+            _productRepoMock.Setup(x => x.GetByIdAsync(productId)).ReturnsAsync(product);
             //Act
             var productDto = await _service.GetByIdAsync(productId);
             //Assert
@@ -99,7 +99,7 @@ namespace Tests.ProductTests.ServiceTests
         {
             //Arrange
             var productId = Guid.NewGuid();
-            _productRepoMock.Setup(x => x.Get(It.IsAny<Guid>())).ReturnsAsync(() => null);
+            _productRepoMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
 
             //Act
 

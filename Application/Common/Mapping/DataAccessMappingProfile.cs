@@ -15,7 +15,11 @@ namespace Application.Common.Mapping
         public DataAccessMappingProfile()
         {
             CreateMap<Domain.Entity.Product, ProductDTO>().ForMember(categoryName => categoryName.CategoryName,
-                opt => opt.MapFrom(product => product.Category.Name)).ReverseMap();
+                opt => opt.MapFrom(product => product.Category.Name));
+
+            CreateMap<ProductDTO, Domain.Entity.Product>()
+                .ForSourceMember(x => x.CategoryName, opt => opt.DoNotValidate());
+
             CreateMap<CategoryDTO, Domain.Entity.Category>().ReverseMap();
 
             CreateMap<Domain.Entity.Outcome, OutcomeDTO>().ReverseMap();

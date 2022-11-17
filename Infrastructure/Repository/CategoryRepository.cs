@@ -19,31 +19,31 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-        public async Task<List<Category>> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
             var categories = await _context.Categories.ToListAsync();
             return categories;
         }
 
-        public async Task<Category> Get(Guid id)
+        public async Task<Category> GetByIdAsync(Guid id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(category => category.Id == id);
             return category;
         }
 
-        public async Task Create(Category item)
+        public async Task CreateAsync(Category item)
         {
             _context.Categories.Add(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Category item)
+        public async Task UpdateAsync(Category item)
         {
             _context.Categories.Update(item);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Category item)
+        public async Task DeleteAsync(Category item)
         {
             _context.Categories.Remove(item);
             await _context.SaveChangesAsync();

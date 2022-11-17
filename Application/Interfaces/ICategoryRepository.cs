@@ -8,10 +8,12 @@ namespace Application.Interfaces
 {
     public interface ICategoryRepository
     {
-        Task<List<Domain.Entity.Category>> GetAll();
-        Task<Domain.Entity.Category> Get(Guid id);
-        Task Create(Domain.Entity.Category category);
-        Task Update(Domain.Entity.Category category);
-        Task Delete(Domain.Entity.Category category);
+        Task<List<Domain.Entity.Category>> GetAllAsync();
+        Task<Domain.Entity.Category> GetByIdAsync(Guid id);
+        Task CreateAsync(Domain.Entity.Category category);
+        Task UpdateAsync(Domain.Entity.Category category);
+        Task DeleteAsync(Domain.Entity.Category category);
+
+        Task IsConnectedProductExist()
     }
 }
