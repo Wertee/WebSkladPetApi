@@ -14,6 +14,5 @@ namespace Application.Interfaces
         Task UpdateAsync(Domain.Entity.Category category);
         Task DeleteAsync(Domain.Entity.Category category);
 
-        Task IsConnectedProductExist()
     }
 }

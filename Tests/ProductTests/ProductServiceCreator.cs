@@ -20,7 +20,7 @@ namespace Tests.ProductTests
                 cfg.AddProfile<DataAccessMappingProfile>();
             });
             var mockMapper = mapperConfiguration.CreateMapper();
-            var repo = new ProductRepository(context, mockMapper);
+            var repo = new ProductRepository(context);
             var service = new ProductService(mockMapper, repo);
             return service;
         }

@@ -36,8 +36,8 @@ namespace Application.Category.Services
         public async Task Create(CategoryDTO categoryDto)
         {
             //validation
-            var categoryValidation = new CreateCategoryValidation(categoryDto);
-            categoryValidation.Validate();
+            var categoryValidation = new CategoryValidation(categoryDto);
+            categoryValidation.ValidateName();
             var category = _mapper.Map<CategoryDTO, Domain.Entity.Category>(categoryDto);
             await _repository.CreateAsync(category);
         }
@@ -46,7 +46,7 @@ namespace Application.Category.Services
         {
             //validation
             var categoryValidation = new CategoryValidation(categoryDto);
-            categoryValidation;
+            categoryValidation.ValidateName();
             var category = _mapper.Map<CategoryDTO, Domain.Entity.Category>(categoryDto);
             await _repository.UpdateAsync(category);
         }
