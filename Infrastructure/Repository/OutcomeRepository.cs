@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class OutcomeRepository : IOutcomeRepository
+    public class OutcomeRepository : IRepository<Outcome>
     {
         private readonly WebSkladDbContext _context;
 
@@ -18,34 +18,31 @@ namespace Infrastructure.Repository
             _context = context;
         }
 
-        public async Task<List<Outcome>> GetAll()
+        public async Task<List<Outcome>> GetAllAsync()
         {
             var outcomes = await _context.Outcomes.ToListAsync();
             return outcomes;
         }
 
-        public async Task<Outcome> Get(Guid id)
+        public async Task<Outcome> GetByIdAsync(Guid id)
         {
             var outcome = await _context.Outcomes.FirstOrDefaultAsync(x => x.Id == id);
             return outcome;
         }
 
-        public async Task Create(Outcome item)
+        public void Create(Outcome item)
         {
             _context.Add(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Outcome item)
+        public void Update(Outcome item)
         {
             _context.Outcomes.Update(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Outcome item)
+        public void Delete(Outcome item)
         {
             _context.Outcomes.Remove(item);
-            await _context.SaveChangesAsync();
         }
 
         public bool IsExist(Guid id)

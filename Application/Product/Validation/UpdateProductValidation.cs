@@ -5,13 +5,7 @@ namespace Application.Product.Validation
     public class UpdateProductValidation : ProductValidation
     {
 
-        public UpdateProductValidation(ProductDTO productDto) : base(productDto)
-        {
+        public UpdateProductValidation(Domain.Entity.Product product) : base(product) { }
 
-        }
-        public override void Validate()
-        {
-            ValidateCount();
-        }
     }
 }

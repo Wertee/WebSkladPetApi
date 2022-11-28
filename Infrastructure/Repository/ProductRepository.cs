@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : IRepository<Product>
     {
         private readonly WebSkladDbContext _context;
         private readonly IMapper _mapper;
@@ -33,22 +33,19 @@ namespace Infrastructure.Repository
             return product;
         }
 
-        public async Task CreateAsync(Product item)
+        public void Create(Product item)
         {
             _context.Products.Add(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Product item)
+        public void Update(Product item)
         {
             _context.Products.Update(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Product product)
+        public void Delete(Product product)
         {
             _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
         }
 
         public bool IsExist(Guid id)

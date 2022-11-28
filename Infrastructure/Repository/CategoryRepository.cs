@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : IRepository<Category>
     {
         private readonly WebSkladDbContext _context;
 
@@ -31,22 +31,19 @@ namespace Infrastructure.Repository
             return category;
         }
 
-        public async Task CreateAsync(Category item)
+        public void Create(Category item)
         {
             _context.Categories.Add(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Category item)
+        public void Update(Category item)
         {
             _context.Categories.Update(item);
-            await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Category item)
+        public void Delete(Category item)
         {
             _context.Categories.Remove(item);
-            await _context.SaveChangesAsync();
         }
 
         public bool IsExist(Guid id)

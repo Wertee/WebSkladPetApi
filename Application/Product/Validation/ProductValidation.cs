@@ -10,18 +10,16 @@ namespace Application.Product.Validation
 {
     public abstract class ProductValidation
     {
-        private readonly ProductDTO _productDto;
+        private readonly Domain.Entity.Product _product;
 
-        protected ProductValidation(ProductDTO productDto)
+        protected ProductValidation(Domain.Entity.Product product)
         {
-            _productDto = productDto;
+            _product = product;
         }
 
-        public abstract void Validate();
-
-        protected void ValidateCount()
+        public void ValidateCount()
         {
-            if (_productDto.Count <= 0)
+            if (_product.Count <= 0)
             {
                 throw new ProductValidationException("Количество не должно быть меньше или равно нулю");
             }

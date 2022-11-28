@@ -23,6 +23,7 @@ namespace Application.Product.DTO
         [Required]
         [Range(0, 999)]
         public int Count { get; set; }
+        public int CountToGive { get; set; }
         [Required]
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }

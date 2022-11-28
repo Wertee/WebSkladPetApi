@@ -26,10 +26,8 @@ namespace WebSkladPetApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<WebSkladDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApi;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<IOutcomeRepository, OutcomeRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IOutcomeService, OutcomeService>();
             builder.Services.AddAutoMapper(cfg =>
             {
