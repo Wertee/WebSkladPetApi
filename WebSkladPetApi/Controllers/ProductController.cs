@@ -87,9 +87,6 @@ namespace WebSkladPetApi.Controllers
                 return NotFound(exception.Message);
             }
         }
-
-
-
     }
 
 }

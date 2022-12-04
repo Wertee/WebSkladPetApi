@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Exceptions;
+﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Outcome.DTO;
 using Application.Product.Validation;
@@ -59,12 +54,36 @@ namespace Application.Outcome.Services
 
         public async Task Update(OutcomeDTO outcomeDto)
         {
-            throw new NotImplementedException();
+            var outcome = _mapper.Map<OutcomeDTO, Domain.Entity.Outcome>(outcomeDto);
+            if (_uof.OutcomeRepository.IsExist(outcome.Id))
+                throw new OutcomeNotFoundException("Объект не найден");
+            if (_uof.ProductRepository.IsExist(outcome.ProductId))
+                throw new ProductNotFoundException("Материал не найден");
+
+            var product = await _uof.ProductRepository.GetByIdAsync(outcome.Id);
+            product.Count -= outcomeDto.Count;
+            product.CountToGive = (product.CountToGive - outcomeDto.Count) < 0 ? product.CountToGive = 0 : product.CountToGive - outcomeDto.Count;
+            if (product.CountToGive == 0)
+                product.CanBeGiven = false;
+            var updateProductValidation = new CreateProductValidation(product);
+            updateProductValidation.ValidateCount();
+            _uof.OutcomeRepository.Update(outcome);
+            _uof.ProductRepository.Update(product);
+            await _uof.SaveAsync();
         }
 
         public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var outcome = await _uof.OutcomeRepository.GetByIdAsync(id);
+            if (outcome == null)
+                throw new OutcomeNotFoundException("Объект не найден");
+            var product = await _uof.ProductRepository.GetByIdAsync(outcome.ProductId);
+            if (product == null)
+                throw new ProductNotFoundException("Материал не найден");
+            product.Count += outcome.Count;
+            _uof.ProductRepository.Update(product);
+            _uof.OutcomeRepository.Delete(outcome);
+            await _uof.SaveAsync();
         }
     }
 }
