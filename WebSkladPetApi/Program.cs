@@ -1,3 +1,4 @@
+using Application.Authentication;
 using Application.Category.Services;
 using Application.Common.Mapping;
 using Application.Interfaces;
@@ -6,6 +7,8 @@ using Application.Product.Services;
 using Domain.Entity;
 using Infrastructure;
 using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebSkladPetApi
@@ -19,6 +22,28 @@ namespace WebSkladPetApi
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
+            var authOptions = builder.Configuration.GetSection("Auth").Get<AuthenticationOption>();
+            builder.Services.Configure<AuthenticationOption>(authOptionsConfiguration);
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = authOptions.Issuer,
+
+                    ValidateAudience = true,
+                    ValidAudience = authOptions.Audience,
+
+                    ValidateLifetime = true,
+
+                    IssuerSigningKey = authOptions.GetSymmetricSecurityKey(),
+                    ValidateIssuerSigningKey = true
+                };
+            });
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -42,9 +67,14 @@ namespace WebSkladPetApi
                 app.UseSwaggerUI();
             }
 
-            app.UseAuthorization();
+            app.UseCors(options =>
+                options.WithOrigins("http://localhost:5070")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
 
+            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
 
             app.MapControllers();
 
