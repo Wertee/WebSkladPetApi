@@ -4,12 +4,7 @@ namespace Application.Product.Validation
 {
     public class CreateProductValidation : ProductValidation
     {
-        public CreateProductValidation(ProductDTO productDto) : base(productDto) { }
+        public CreateProductValidation(Domain.Entity.Product product) : base(product) { }
 
-
-        public override void Validate()
-        {
-            ValidateCount();
-        }
     }
 }
