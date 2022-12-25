@@ -1,12 +1,10 @@
-﻿using Application.Authentication;
-using Application.Authentication.DTO;
-using Domain.Entity;
+﻿using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Application.Authentication.Services;
+using Application.Exceptions;
+using Application.Interfaces;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using Application.User.DTO;
 
 namespace WebSkladPetApi.Controllers
 {
@@ -14,62 +12,33 @@ namespace WebSkladPetApi.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-
-        private readonly IOptions<AuthenticationOption> _authOptions;
-
+        private readonly IAuthenticationService _service;
         private static readonly User user = new User() { Username = "Admin", Password = "1234" };
 
-        public AuthenticationController(IOptions<AuthenticationOption> authOptions)
+        public AuthenticationController(IAuthenticationService service)
         {
-            _authOptions = authOptions;
+            _service = service;
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDTO userDto)
-        {
-            return Ok(user);
-        }
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserDTO userDto)
+        public IActionResult Login([FromBody] UserDto userDto)
         {
-
-            var user = AuthenticateUser(userDto.Username, userDto.Password);
-            if (user != null)
+            try
             {
-                var token = GenerateJWT(user);
-                return Ok(new { access_token = token }
-            );
+                var userToken = _service.AuthenticateUser(userDto);
+                if (!string.IsNullOrEmpty(userToken))
+                {
+                    return Ok(new { access_token = userToken });
+                }
+            }
+            catch (UserLoginException exception)
+            {
+                return Unauthorized(exception.Message);
             }
 
             return Unauthorized();
         }
 
-        private User AuthenticateUser(string username, string password)
-        {
-            if (user.Username == username && user.Password == password)
-                return user;
-            return null;
-        }
 
-        private string GenerateJWT(User user)
-        {
-            var authParams = _authOptions.Value;
-            var securityKey = authParams.GetSymmetricSecurityKey();
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>()
-            {
-                new Claim(JwtRegisteredClaimNames.Name,user.Username),
-                new Claim(JwtRegisteredClaimNames.Sub,user.Id.ToString())
-            };
-
-            var token = new JwtSecurityToken(authParams.Issuer,
-            authParams.Audience,
-            claims,
-            expires: DateTime.Now.AddSeconds(authParams.TokenLifetime),
-            signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
     }
 }
