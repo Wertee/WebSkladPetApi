@@ -18,7 +18,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<ProductDTO>>> Get()
         {
             var productsDto = await _service.Get();
@@ -57,11 +57,6 @@ namespace WebSkladPetApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(ProductDTO productDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 await _service.Update(productDto);

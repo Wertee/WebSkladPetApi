@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Application.Exceptions;
 using Application.Interfaces;
 using Application.User.DTO;
-using Domain.Entity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

@@ -69,20 +69,20 @@ namespace WebSkladPetApi
             });
             var app = builder.Build();
 
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    try
-            //    {
-            //        var userService = services.GetRequiredService<IUserService>();
-            //        await UserInitialization.Initialize(userService);
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        Console.WriteLine(e);
-            //        throw;
-            //    }
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var userService = services.GetRequiredService<IUserService>();
+                    await UserInitialization.Initialize(userService);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
 
 
             // Configure the HTTP request pipeline.
@@ -93,7 +93,7 @@ namespace WebSkladPetApi
             }
 
             app.UseCors(options =>
-                options.WithOrigins("http://localhost:5070")
+                options.WithOrigins("http://localhost:4200")
                     .AllowAnyMethod()
                     .AllowAnyHeader());
 

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces;
-using AutoMapper;
+﻿using Application.Interfaces;
 using Domain.Entity;
 
 namespace Infrastructure.Repository
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private WebSkladDbContext _context;
+        private readonly WebSkladDbContext _context;
         private IRepository<Product> _productRepository;
         private IRepository<Category> _categoryRepository;
         private IRepository<Outcome> _outcomeRepository;

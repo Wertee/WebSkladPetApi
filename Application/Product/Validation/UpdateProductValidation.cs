@@ -1,5 +1,4 @@
-﻿using Application.Product.DTO;
-
+﻿using
 namespace Application.Product.Validation
 {
     public class UpdateProductValidation : ProductValidation

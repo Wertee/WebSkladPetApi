@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces;
-using Application.Product.DTO;
+﻿using Application.Interfaces;
 using AutoMapper;
 using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +23,7 @@ namespace Infrastructure.Repository
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
+            var product = await _context.Products.Include(x => x.Category).FirstOrDefaultAsync(product => product.Id == id);
             return product;
         }
 
