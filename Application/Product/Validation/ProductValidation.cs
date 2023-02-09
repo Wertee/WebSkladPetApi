@@ -15,7 +15,7 @@ namespace Application.Product.Validation
         {
             if (_product.Count <= 0)
             {
-                throw new ProductValidationException("Количество не должно быть меньше или равно нулю");
+                throw new ProductValidationException("Count less or equal 0");
             }
         }
 

@@ -1,6 +1,5 @@
 ﻿using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Application.Authentication.Services;
 using Application.Exceptions;
 using Application.Interfaces;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;

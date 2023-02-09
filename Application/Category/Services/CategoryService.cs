@@ -57,7 +57,12 @@ namespace Application.Category.Services
         {
             var category = await _uof.CategoryRepository.GetByIdAsync(id);
             if (category == null)
-                throw new CategoryNotFoundException("Not found");
+                throw new CategoryNotFoundException("Category not found");
+
+            var products = await _uof.ProductRepository.GetAllAsync();
+            int countOfConnectedProducts = products.Count(x => x.Category == category);
+            if (countOfConnectedProducts > 0)
+                throw new CategoryValidationException("Number of products with this category more than 0");
             _uof.CategoryRepository.Delete(category);
             await _uof.SaveAsync();
         }

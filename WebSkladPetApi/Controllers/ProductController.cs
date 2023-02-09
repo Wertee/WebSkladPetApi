@@ -1,9 +1,7 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Product.DTO;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebSkladPetApi.Controllers
 {

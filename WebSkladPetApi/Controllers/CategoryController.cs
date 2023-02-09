@@ -1,7 +1,6 @@
 ﻿using Application.Category.DTO;
 using Application.Exceptions;
 using Application.Interfaces;
-using Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebSkladPetApi.Controllers
@@ -35,7 +34,6 @@ namespace WebSkladPetApi.Controllers
             {
                 return NotFound(exception.Message);
             }
-
         }
 
         [HttpPost]
@@ -55,8 +53,15 @@ namespace WebSkladPetApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _service.Delete(id);
-            return Ok();
+            try
+            {
+                await _service.Delete(id);
+                return Ok();
+            }
+            catch (CategoryValidationException exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
     }
 }

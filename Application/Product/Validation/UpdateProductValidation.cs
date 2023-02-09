@@ -1,5 +1,4 @@
-﻿using
-namespace Application.Product.Validation
+﻿namespace Application.Product.Validation
 {
     public class UpdateProductValidation : ProductValidation
     {
