@@ -18,7 +18,7 @@ namespace WebSkladPetApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var categories = await _service.Get();
+            var categories = await _service.GetAllAsync();
             return Ok(categories);
         }
 
@@ -27,7 +27,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                var categoryDto = await _service.Get(id);
+                var categoryDto = await _service.GetByIdAsync(id);
                 return Ok(categoryDto);
             }
             catch (CategoryNotFoundException exception)
@@ -39,14 +39,14 @@ namespace WebSkladPetApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CategoryDTO categoryDto)
         {
-            await _service.Create(categoryDto);
+            await _service.CreateAsync(categoryDto);
             return Ok();
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(CategoryDTO categoryDto)
         {
-            await _service.Update(categoryDto);
+            await _service.UpdateAsync(categoryDto);
             return Ok();
         }
 
@@ -55,7 +55,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (CategoryValidationException exception)

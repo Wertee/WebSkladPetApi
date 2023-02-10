@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Category.DTO;
-using Application.Exceptions;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Moq;
 
 namespace Tests.Category.ServiceTests
 {
     public class GetCategoryTests : CategoryTestsBase
     {
+        private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
+
         [Fact]
         public async Task GetAll_Success()
         {
@@ -26,12 +23,32 @@ namespace Tests.Category.ServiceTests
                 {
                     Id = Guid.NewGuid(),
                     Name = "TestCategory1"
+                },
+                new Domain.Entity.Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "TestCategory1"
+                },
+                new Domain.Entity.Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "TestCategory1"
+                },
+                new Domain.Entity.Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "TestCategory1"
+                },
+                new Domain.Entity.Category()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "TestCategory1"
                 }
             };
-            _categoryRepositoryMock.Setup(x => x.GetAllAsync()).ReturnsAsync(categories);
+            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetAllAsync()).ReturnsAsync(categories);
 
             //Act
-            var categoriesDto = await _service.Get();
+            var categoriesDto = await Service.GetAllAsync();
 
             //Assert
             Assert.Equal(2, categoriesDto.Count);
@@ -47,10 +64,10 @@ namespace Tests.Category.ServiceTests
                 Id = categoryId,
                 Name = "TestCategory"
             };
-            _categoryRepositoryMock.Setup(x => x.GetByIdAsync(categoryId)).ReturnsAsync(category);
+            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(categoryId)).ReturnsAsync(category);
 
             //Act
-            var categoryDto = await _service.Get(categoryId);
+            var categoryDto = await Service.GetByIdAsync(categoryId);
 
             //Assert
             Assert.Equal(categoryId, categoryDto.Id);
@@ -61,11 +78,11 @@ namespace Tests.Category.ServiceTests
         {
             //Arrange
             var categoryId = Guid.NewGuid();
-            _categoryRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
+            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
 
             //Act
             //Assert
-            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await _service.Get(categoryId));
+            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await Service.GetByIdAsync(categoryId));
         }
     }
 }

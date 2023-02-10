@@ -6,22 +6,28 @@ using System.Threading.Tasks;
 using Application.Category.Services;
 using Application.Common.Mapping;
 using Application.Interfaces;
+using Application.Product.Services;
 using AutoMapper;
+using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using Tests.Common;
 
 namespace Tests.Category
 {
-    public abstract class CategoryTestsBase
+    public abstract class CategoryTestsBase : TestServicesBase
     {
-        protected readonly CategoryService _service;
-        protected readonly IMapper _mapper;
-        protected readonly Mock<ICategoryRepository> _categoryRepositoryMock = new Mock<ICategoryRepository>();
-
+        protected readonly CategoryService Service;
+        protected readonly IMapper Mapper;
         protected CategoryTestsBase()
         {
-            var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<DataAccessMappingProfile>(); });
-            _mapper = mapperConfiguration.CreateMapper();
-            _service = new CategoryService(_categoryRepositoryMock.Object, _mapper);
+            var mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<DataAccessMappingProfile>();
+            });
+            Mapper = mapperConfiguration.CreateMapper();
+
+            Service = CategoryServiceCreator.CreateService(Context);
         }
     }
 }
