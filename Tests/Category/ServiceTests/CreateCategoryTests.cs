@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Category.DTO;
 using Application.Interfaces;
 using Domain.Entity;
+using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -14,7 +15,6 @@ namespace Tests.Category.ServiceTests
 
     public class CreateCategoryTests : CategoryTestsBase
     {
-        private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
         [Fact]
         public async Task CreateAsync_Success()
         {
@@ -25,13 +25,16 @@ namespace Tests.Category.ServiceTests
                 Name = "TestCategory"
             };
 
-            var categoryDto = Mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
+            var categoryDto = _mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
 
 
             _unitOfWorkMock.Setup(x => x.SaveAsync())
                 .Returns(Task.CompletedTask);
+
+            _categoryRepositoryMock.Setup(x => x.Create(category)).Verifiable();
+
             //Act
-            var taskResult = Service.CreateAsync(categoryDto).IsCompletedSuccessfully;
+            var taskResult = _service.CreateAsync(categoryDto).IsCompletedSuccessfully;
             //Assert
             Assert.Equal(Task.CompletedTask.IsCompletedSuccessfully, taskResult);
         }
@@ -44,11 +47,11 @@ namespace Tests.Category.ServiceTests
                 Id = Guid.NewGuid(),
                 Name = "T"
             };
-            var categoryDto = Mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
+            var categoryDto = _mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
             _unitOfWorkMock.Setup(x => x.SaveAsync())
                 .Returns(Task.CompletedTask);
             //Act
-            var taskResult = Service.CreateAsync(categoryDto).IsCompletedSuccessfully;
+            var taskResult = _service.CreateAsync(categoryDto).IsCompletedSuccessfully;
             //Assert
             Assert.Equal(Task.CompletedTask.IsFaulted, taskResult);
         }

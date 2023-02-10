@@ -6,7 +6,6 @@ namespace Tests.Category.ServiceTests
 {
     public class GetCategoryTests : CategoryTestsBase
     {
-        private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 
         [Fact]
         public async Task GetAll_Success()
@@ -48,10 +47,10 @@ namespace Tests.Category.ServiceTests
             _unitOfWorkMock.Setup(x => x.CategoryRepository.GetAllAsync()).ReturnsAsync(categories);
 
             //Act
-            var categoriesDto = await Service.GetAllAsync();
+            var categoriesDto = await _service.GetAllAsync();
 
             //Assert
-            Assert.Equal(2, categoriesDto.Count);
+            Assert.Equal(categories.Count, categoriesDto.Count);
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace Tests.Category.ServiceTests
             _unitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(categoryId)).ReturnsAsync(category);
 
             //Act
-            var categoryDto = await Service.GetByIdAsync(categoryId);
+            var categoryDto = await _service.GetByIdAsync(categoryId);
 
             //Assert
             Assert.Equal(categoryId, categoryDto.Id);
@@ -82,7 +81,7 @@ namespace Tests.Category.ServiceTests
 
             //Act
             //Assert
-            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await Service.GetByIdAsync(categoryId));
+            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await _service.GetByIdAsync(categoryId));
         }
     }
 }
