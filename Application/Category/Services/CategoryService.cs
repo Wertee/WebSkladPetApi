@@ -60,7 +60,7 @@ namespace Application.Category.Services
                 throw new CategoryNotFoundException("Category not found");
 
             var products = await _uof.ProductRepository.GetAllAsync();
-            int countOfConnectedProducts = products.Count(x => x.Category == category);
+            int countOfConnectedProducts = products.Count(x => x.CategoryId == category.Id);
             if (countOfConnectedProducts > 0)
                 throw new CategoryValidationException("Number of products with this category more than 0");
             _uof.CategoryRepository.Delete(category);

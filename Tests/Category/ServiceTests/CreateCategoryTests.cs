@@ -16,7 +16,7 @@ namespace Tests.Category.ServiceTests
     public class CreateCategoryTests : CategoryTestsBase
     {
         [Fact]
-        public async Task CreateAsync_Success()
+        public void CreateAsync_Success()
         {
             //Arrange
             var category = new Domain.Entity.Category()
@@ -25,19 +25,15 @@ namespace Tests.Category.ServiceTests
                 Name = "TestCategory"
             };
 
-            var categoryDto = _mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
-
-
-            _unitOfWorkMock.Setup(x => x.SaveAsync())
-                .Returns(Task.CompletedTask);
+            var categoryDto = Mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
 
             //Act
-            var taskResult = _service.CreateAsync(categoryDto).IsCompletedSuccessfully;
+            var taskResult = Service.CreateAsync(categoryDto).IsCompletedSuccessfully;
             //Assert
             Assert.Equal(Task.CompletedTask.IsCompletedSuccessfully, taskResult);
         }
         [Fact]
-        public async Task CreateAsync_FailOnShortCategoryName()
+        public void CreateAsync_FailOnShortCategoryName()
         {
             //Arrange
             var category = new Domain.Entity.Category()
@@ -45,11 +41,11 @@ namespace Tests.Category.ServiceTests
                 Id = Guid.NewGuid(),
                 Name = "T"
             };
-            var categoryDto = _mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
-            _unitOfWorkMock.Setup(x => x.SaveAsync())
+            var categoryDto = Mapper.Map<Domain.Entity.Category, CategoryDTO>(category);
+            UnitOfWorkMock.Setup(x => x.SaveAsync())
                 .Returns(Task.CompletedTask);
             //Act
-            var taskResult = _service.CreateAsync(categoryDto).IsCompletedSuccessfully;
+            var taskResult = Service.CreateAsync(categoryDto).IsCompletedSuccessfully;
             //Assert
             Assert.Equal(Task.CompletedTask.IsFaulted, taskResult);
         }

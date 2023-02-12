@@ -44,10 +44,10 @@ namespace Tests.Category.ServiceTests
                     Name = "TestCategory1"
                 }
             };
-            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetAllAsync()).ReturnsAsync(categories);
+            UnitOfWorkMock.Setup(x => x.CategoryRepository.GetAllAsync()).ReturnsAsync(categories);
 
             //Act
-            var categoriesDto = await _service.GetAllAsync();
+            var categoriesDto = await Service.GetAllAsync();
 
             //Assert
             Assert.Equal(categories.Count, categoriesDto.Count);
@@ -63,10 +63,10 @@ namespace Tests.Category.ServiceTests
                 Id = categoryId,
                 Name = "TestCategory"
             };
-            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(categoryId)).ReturnsAsync(category);
+            UnitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(categoryId)).ReturnsAsync(category);
 
             //Act
-            var categoryDto = await _service.GetByIdAsync(categoryId);
+            var categoryDto = await Service.GetByIdAsync(categoryId);
 
             //Assert
             Assert.Equal(categoryId, categoryDto.Id);
@@ -77,11 +77,11 @@ namespace Tests.Category.ServiceTests
         {
             //Arrange
             var categoryId = Guid.NewGuid();
-            _unitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
+            UnitOfWorkMock.Setup(x => x.CategoryRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
 
             //Act
             //Assert
-            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await _service.GetByIdAsync(categoryId));
+            await Assert.ThrowsAsync<CategoryNotFoundException>(async () => await Service.GetByIdAsync(categoryId));
         }
     }
 }
