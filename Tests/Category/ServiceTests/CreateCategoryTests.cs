@@ -31,8 +31,6 @@ namespace Tests.Category.ServiceTests
             _unitOfWorkMock.Setup(x => x.SaveAsync())
                 .Returns(Task.CompletedTask);
 
-            _categoryRepositoryMock.Setup(x => x.Create(category)).Verifiable();
-
             //Act
             var taskResult = _service.CreateAsync(categoryDto).IsCompletedSuccessfully;
             //Assert

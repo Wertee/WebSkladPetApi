@@ -14,9 +14,8 @@ namespace Tests.Category
     {
         protected readonly CategoryService _service;
         protected readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
-        protected readonly IUnitOfWork _unitOfWork;
+        protected readonly Mock<IRepository<Domain.Entity.Category>> CategoryRepoMock = new();
         protected readonly IMapper _mapper;
-        protected readonly Mock<CategoryRepository> _categoryRepositoryMock = new Mock<CategoryRepository>();
         protected CategoryTestsBase()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
@@ -31,6 +30,8 @@ namespace Tests.Category
                 .Options;
             var context = new WebSkladDbContext(options);
             context.Database.EnsureCreated();
+
+            _unitOfWorkMock.Setup(uow => uow.CategoryRepository).Returns(CategoryRepoMock.Object);
 
             _service = new CategoryService(_unitOfWorkMock.Object, _mapper);
         }
