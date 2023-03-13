@@ -2,6 +2,6 @@
 {
     public class OutcomeValidation
     {
-
+        //TODO create validation
     }
 }

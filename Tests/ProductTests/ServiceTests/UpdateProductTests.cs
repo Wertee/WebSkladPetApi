@@ -31,7 +31,7 @@ namespace Tests.ProductTests.ServiceTests
             };
             Context.ChangeTracker.Clear();
             //Act
-            await Service.Update(updatedProductDTO);
+            await Service.UpdateAsync(updatedProductDTO);
 
             //Assert
             Assert.True(Context.Products.Any(x => x.Id == ProductsContextFactory.ProductIdForUpdate && x.Description == newDescription));
@@ -55,7 +55,7 @@ namespace Tests.ProductTests.ServiceTests
             Context.ChangeTracker.Clear();
             //Act
             //Assert
-            await Assert.ThrowsAsync<ProductNotFoundException>(async () => await Service.Update(updatedProductDTO));
+            await Assert.ThrowsAsync<ProductNotFoundException>(async () => await Service.UpdateAsync(updatedProductDTO));
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace Tests.ProductTests.ServiceTests
             Context.ChangeTracker.Clear();
             //Act
             //Assert
-            await Assert.ThrowsAsync<ProductValidationException>(async () => await Service.Update(updatedProductDTO));
+            await Assert.ThrowsAsync<ProductValidationException>(async () => await Service.UpdateAsync(updatedProductDTO));
         }
     }
 }

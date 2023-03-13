@@ -15,7 +15,7 @@ namespace Application.Product.Services
             _mapper = mapper;
             _uof = uof;
         }
-        public async Task<List<ProductDTO>> Get()
+        public async Task<List<ProductDTO>> GetAllAsync()
         {
             var products = await _uof.ProductRepository.GetAllAsync();
             var productsDto = _mapper.Map<List<Domain.Entity.Product>, List<ProductDTO>>(products);
@@ -32,7 +32,7 @@ namespace Application.Product.Services
         }
 
 
-        public async Task Create(ProductDTO productDto)
+        public async Task CreateAsync(ProductDTO productDto)
         {
             var product = _mapper.Map<ProductDTO, Domain.Entity.Product>(productDto);
             //validation
@@ -43,7 +43,7 @@ namespace Application.Product.Services
             await _uof.SaveAsync();
         }
 
-        public async Task Update(ProductDTO productDto)
+        public async Task UpdateAsync(ProductDTO productDto)
         {
             var product = _mapper.Map<ProductDTO, Domain.Entity.Product>(productDto);
 
@@ -57,7 +57,7 @@ namespace Application.Product.Services
             await _uof.SaveAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var product = await _uof.ProductRepository.GetByIdAsync(id);
             if (product == null)

@@ -17,14 +17,14 @@ namespace Application.Outcome.Services
             _mapper = mapper;
         }
 
-        public async Task<List<OutcomeDTO>> Get()
+        public async Task<List<OutcomeDTO>> GetAllAsync()
         {
             var outcomes = await _uof.OutcomeRepository.GetAllAsync();
             var outcomesDto = _mapper.Map<List<Domain.Entity.Outcome>, List<OutcomeDTO>>(outcomes);
             return outcomesDto;
         }
 
-        public async Task<OutcomeDTO> Get(Guid id)
+        public async Task<OutcomeDTO> GetByIdAsync(Guid id)
         {
             var outcome = await _uof.OutcomeRepository.GetByIdAsync(id);
             if (outcome == null)
@@ -34,7 +34,7 @@ namespace Application.Outcome.Services
 
         }
 
-        public async Task Create(OutcomeDTO outcomeDto)
+        public async Task CreateAsync(OutcomeDTO outcomeDto)
         {
             var product = await _uof.ProductRepository.GetByIdAsync(outcomeDto.ProductId);
             if (product == null)
@@ -52,7 +52,7 @@ namespace Application.Outcome.Services
             await _uof.SaveAsync();
         }
 
-        public async Task Update(OutcomeDTO outcomeDto)
+        public async Task UpdateAsync(OutcomeDTO outcomeDto)
         {
             var outcome = _mapper.Map<OutcomeDTO, Domain.Entity.Outcome>(outcomeDto);
             if (_uof.OutcomeRepository.IsExist(outcome.Id))
@@ -65,14 +65,14 @@ namespace Application.Outcome.Services
             product.CountToGive = (product.CountToGive - outcomeDto.Count) < 0 ? product.CountToGive = 0 : product.CountToGive - outcomeDto.Count;
             if (product.CountToGive == 0)
                 product.CanBeGiven = false;
-            var updateProductValidation = new CreateProductValidation(product);
+            var updateProductValidation = new UpdateProductValidation(product);
             updateProductValidation.ValidateCount();
             _uof.OutcomeRepository.Update(outcome);
             _uof.ProductRepository.Update(product);
             await _uof.SaveAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var outcome = await _uof.OutcomeRepository.GetByIdAsync(id);
             if (outcome == null)

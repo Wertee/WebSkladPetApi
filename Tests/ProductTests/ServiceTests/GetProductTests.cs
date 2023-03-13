@@ -35,7 +35,7 @@ namespace Tests.ProductTests.ServiceTests
         {
             //Arrange
             //Act
-            var productDtoList = await Service.Get();
+            var productDtoList = await Service.GetAllAsync();
             //Assert
             Assert.Equal(2, productDtoList.Count);
         }
@@ -77,7 +77,7 @@ namespace Tests.ProductTests.ServiceTests
             _unitOfWorkMock.Setup(x => x.ProductRepository.GetAllAsync()).ReturnsAsync(mockProducts);
 
             //Act
-            var products = await _service.Get();
+            var products = await _service.GetAllAsync();
 
             //Assert
             Assert.Equal(3, products.Count);
