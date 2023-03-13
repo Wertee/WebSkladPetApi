@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Moq;
 
 namespace Tests.Outcome.ServiceTests
@@ -10,7 +11,7 @@ namespace Tests.Outcome.ServiceTests
     public class GetOutcomeTests : OutcomeTestsBase
     {
         [Fact]
-        public async Task GetAll_Succsess()
+        public async Task GetAllAsync_Succsess()
         {
             //Arrange
             List<Domain.Entity.Outcome> outcomes = new List<Domain.Entity.Outcome>()
@@ -45,7 +46,7 @@ namespace Tests.Outcome.ServiceTests
         }
 
         [Fact]
-        public async Task GetById_Success()
+        public async Task GetByIdAsync_Success()
         {
             //Arrange
             var outcome = new Domain.Entity.Outcome()
@@ -64,6 +65,19 @@ namespace Tests.Outcome.ServiceTests
 
             //Assert
             Assert.Equal(outcome.Id, outcomeDto.Id);
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_FailOnWrongId()
+        {
+            //Arrange
+            var wrongId = Guid.NewGuid();
+            UnitOfWorkMock.Setup(x => x.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
+
+            //Act
+            //Assert
+            await Assert.ThrowsAsync<OutcomeNotFoundException>(async () => await Service.GetByIdAsync(wrongId));
+
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Application.Product.Services
         {
             var product = _mapper.Map<ProductDTO, Domain.Entity.Product>(productDto);
             //validation
-            var createProductValidation = new CreateProductValidation(product);
+            var createProductValidation = new ProductValidation(product);
             createProductValidation.ValidateCount();
 
             _uof.ProductRepository.Create(product);
@@ -50,7 +50,7 @@ namespace Application.Product.Services
             bool isProductExist = _uof.ProductRepository.IsExist(productDto.Id);
             if (!isProductExist)
                 throw new ProductNotFoundException("Материал не найден");
-            var updateProductValidation = new UpdateProductValidation(product);
+            var updateProductValidation = new ProductValidation(product);
             updateProductValidation.ValidateCount();
 
             _uof.ProductRepository.Update(product);

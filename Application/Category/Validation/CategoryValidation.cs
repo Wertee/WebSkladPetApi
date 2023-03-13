@@ -20,10 +20,5 @@ namespace Application.Category.Validation
             }
         }
 
-        public void ValidateProductsConnectedToCurrentCategory()
-        {
-
-        }
-
     }
 }

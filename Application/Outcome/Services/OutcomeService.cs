@@ -28,7 +28,7 @@ namespace Application.Outcome.Services
         {
             var outcome = await _uof.OutcomeRepository.GetByIdAsync(id);
             if (outcome == null)
-                throw new Exception();
+                throw new OutcomeNotFoundException("Объект не найден");
             var outcomeDto = _mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
             return outcomeDto;
 
@@ -44,8 +44,8 @@ namespace Application.Outcome.Services
             product.CountToGive = (product.CountToGive - outcomeDto.Count) < 0 ? product.CountToGive = 0 : product.CountToGive - outcomeDto.Count;
             if (product.CountToGive == 0)
                 product.CanBeGiven = false;
-            var updateProductValidation = new CreateProductValidation(product);
-            updateProductValidation.ValidateCount();
+            var productValidation = new ProductValidation(product);
+            productValidation.ValidateCount();
             var outcome = _mapper.Map<OutcomeDTO, Domain.Entity.Outcome>(outcomeDto);
             _uof.OutcomeRepository.Create(outcome);
             _uof.ProductRepository.Update(product);
@@ -65,7 +65,7 @@ namespace Application.Outcome.Services
             product.CountToGive = (product.CountToGive - outcomeDto.Count) < 0 ? product.CountToGive = 0 : product.CountToGive - outcomeDto.Count;
             if (product.CountToGive == 0)
                 product.CanBeGiven = false;
-            var updateProductValidation = new UpdateProductValidation(product);
+            var updateProductValidation = new ProductValidation(product);
             updateProductValidation.ValidateCount();
             _uof.OutcomeRepository.Update(outcome);
             _uof.ProductRepository.Update(product);

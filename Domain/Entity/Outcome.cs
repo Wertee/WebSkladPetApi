@@ -8,6 +8,7 @@
         public string ProductName { get; set; }
         public int Count { get; set; }
         public string Recipient { get; set; }
+        //TODO Replace ProductName to product
 
     }
 }
