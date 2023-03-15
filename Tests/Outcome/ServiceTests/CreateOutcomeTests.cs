@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Outcome.DTO;
+using Application.Product.Validation;
 using Domain.Entity;
 using Moq;
 
@@ -66,10 +68,8 @@ namespace Tests.Outcome.ServiceTests
             var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
 
             //Act
-            var taskResult = Service.CreateAsync(outcomeDto).IsCompletedSuccessfully;
-
             //Assert
-            Assert.Equal(Task.CompletedTask.IsFaulted, taskResult);
+            Assert.ThrowsAsync<ProductNotFoundException>(async () => await Service.CreateAsync(outcomeDto));
         }
 
         [Fact]
@@ -101,10 +101,8 @@ namespace Tests.Outcome.ServiceTests
             var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
 
             //Act
-            var taskResult = Service.CreateAsync(outcomeDto).IsCompletedSuccessfully;
-
             //Assert
-            Assert.Equal(Task.CompletedTask.IsFaulted, taskResult);
+            Assert.ThrowsAsync<ProductValidationException>(async () => await Service.CreateAsync(outcomeDto));
         }
     }
 }

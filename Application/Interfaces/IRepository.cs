@@ -9,5 +9,6 @@ namespace Application.Interfaces
         void Update(T entityToUpdate);
         void Delete(T entityToDelete);
         bool IsExist(Guid id);
+        void Detach(T entity);
     }
 }

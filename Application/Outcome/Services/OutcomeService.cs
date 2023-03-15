@@ -54,21 +54,17 @@ namespace Application.Outcome.Services
 
         public async Task UpdateAsync(OutcomeDTO outcomeDto)
         {
+            var currentOutcome = await _uof.OutcomeRepository.GetByIdAsync(outcomeDto.Id);
+            outcomeDto.Count = currentOutcome.Count;
             var outcome = _mapper.Map<OutcomeDTO, Domain.Entity.Outcome>(outcomeDto);
-            if (_uof.OutcomeRepository.IsExist(outcome.Id))
-                throw new OutcomeNotFoundException("Объект не найден");
-            if (_uof.ProductRepository.IsExist(outcome.ProductId))
-                throw new ProductNotFoundException("Материал не найден");
 
-            var product = await _uof.ProductRepository.GetByIdAsync(outcome.Id);
-            product.Count -= outcomeDto.Count;
-            product.CountToGive = (product.CountToGive - outcomeDto.Count) < 0 ? product.CountToGive = 0 : product.CountToGive - outcomeDto.Count;
-            if (product.CountToGive == 0)
-                product.CanBeGiven = false;
-            var updateProductValidation = new ProductValidation(product);
-            updateProductValidation.ValidateCount();
+            _uof.OutcomeRepository.Detach(currentOutcome);
+
+            if (!_uof.OutcomeRepository.IsExist(outcome.Id))
+                throw new OutcomeNotFoundException("Объект не найден");
+            if (!_uof.ProductRepository.IsExist(outcome.ProductId))
+                throw new ProductNotFoundException("Материал не найден");
             _uof.OutcomeRepository.Update(outcome);
-            _uof.ProductRepository.Update(product);
             await _uof.SaveAsync();
         }
 
