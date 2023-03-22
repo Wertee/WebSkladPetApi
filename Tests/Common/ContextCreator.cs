@@ -1,5 +1,4 @@
-﻿
-using Application.Common.Mapping;
+﻿using Application.Common.Mapping;
 using Application.Product.Services;
 using AutoMapper;
 using Infrastructure;

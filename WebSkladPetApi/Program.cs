@@ -6,13 +6,10 @@ using Application.Interfaces;
 using Application.Outcome.Services;
 using Application.Product.Services;
 using Application.User.Services;
-using Domain.Entity;
 using Infrastructure;
 using Infrastructure.Initialization;
 using Infrastructure.Repository;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using IAuthenticationService = Application.Interfaces.IAuthenticationService;
 
