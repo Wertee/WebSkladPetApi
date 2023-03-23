@@ -15,13 +15,13 @@ namespace Infrastructure.Repository
 
         public async Task<List<Outcome>> GetAllAsync()
         {
-            var outcomes = await _context.Outcomes.ToListAsync();
+            var outcomes = await _context.Outcomes.Include(outcome => outcome.Product).ToListAsync();
             return outcomes;
         }
 
         public async Task<Outcome> GetByIdAsync(Guid id)
         {
-            var outcome = await _context.Outcomes.FirstOrDefaultAsync(x => x.Id == id);
+            var outcome = await _context.Outcomes.Include(outcome => outcome.Product).FirstOrDefaultAsync(x => x.Id == id);
             return outcome;
         }
 

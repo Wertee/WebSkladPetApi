@@ -17,7 +17,8 @@ namespace Application.Common.Mapping
 
             CreateMap<CategoryDTO, Domain.Entity.Category>().ReverseMap();
 
-            CreateMap<Domain.Entity.Outcome, OutcomeDTO>();
+            CreateMap<Domain.Entity.Outcome, OutcomeDTO>().ForMember(outcomeDto => outcomeDto.ProductName,
+                opt => opt.MapFrom(outcome => outcome.Product.Name));
             CreateMap<OutcomeDTO, Domain.Entity.Outcome>().ForSourceMember(x => x.ProductName, opt => opt.DoNotValidate());
 
         }
