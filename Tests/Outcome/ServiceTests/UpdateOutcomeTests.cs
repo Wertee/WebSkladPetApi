@@ -21,7 +21,7 @@ namespace Tests.Outcome.ServiceTests
                 Id = Guid.NewGuid(),
                 Count = 2,
                 ProductId = Guid.NewGuid(),
-                ProductName = "Test",
+                Product = new Product(),
                 OutcomeDate = DateTime.Now,
                 Recipient = "Test"
             };
@@ -54,15 +54,6 @@ namespace Tests.Outcome.ServiceTests
         public async Task UpdateAsync_FailOnWrongOutcomeId()
         {
             //Arrange
-            var outcome = new Domain.Entity.Outcome()
-            {
-                Id = Guid.NewGuid(),
-                Count = 2,
-                ProductId = Guid.NewGuid(),
-                ProductName = "Test",
-                OutcomeDate = DateTime.Now,
-                Recipient = "Test"
-            };
 
             var product = new Product()
             {
@@ -72,6 +63,16 @@ namespace Tests.Outcome.ServiceTests
                 Description = "Мышь Оклик",
                 Id = Guid.Parse("F02A40F3-F869-43E9-83E0-9F6396B8E119"),
                 Name = "Мышь"
+            };
+
+            var outcome = new Domain.Entity.Outcome()
+            {
+                Id = Guid.NewGuid(),
+                Count = 2,
+                ProductId = Guid.NewGuid(),
+                Product = product,
+                OutcomeDate = DateTime.Now,
+                Recipient = "Test"
             };
 
             UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product);
@@ -90,16 +91,6 @@ namespace Tests.Outcome.ServiceTests
         public async Task UpdateAsync_FailOnWrongProductId()
         {
             //Arrange
-            var outcome = new Domain.Entity.Outcome()
-            {
-                Id = Guid.NewGuid(),
-                Count = 2,
-                ProductId = Guid.NewGuid(),
-                ProductName = "Test",
-                OutcomeDate = DateTime.Now,
-                Recipient = "Test"
-            };
-
             var product = new Product()
             {
                 CanBeGiven = true,
@@ -108,6 +99,16 @@ namespace Tests.Outcome.ServiceTests
                 Description = "Мышь Оклик",
                 Id = Guid.Parse("F02A40F3-F869-43E9-83E0-9F6396B8E119"),
                 Name = "Мышь"
+            };
+
+            var outcome = new Domain.Entity.Outcome()
+            {
+                Id = Guid.NewGuid(),
+                Count = 2,
+                ProductId = Guid.NewGuid(),
+                Product = product,
+                OutcomeDate = DateTime.Now,
+                Recipient = "Test"
             };
 
             UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product);

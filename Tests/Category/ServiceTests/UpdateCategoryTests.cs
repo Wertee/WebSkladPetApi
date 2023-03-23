@@ -6,7 +6,7 @@ namespace Tests.Category.ServiceTests
     public class UpdateCategoryTests : CategoryTestsBase
     {
         [Fact]
-        public async Task UpdateAsync_Success()
+        public void UpdateAsync_Success()
         {
             //Arrange
             var updatedCategory = new Domain.Entity.Category()

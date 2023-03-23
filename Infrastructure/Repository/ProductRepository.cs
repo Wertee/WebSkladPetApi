@@ -8,7 +8,6 @@ namespace Infrastructure.Repository
     public class ProductRepository : IRepository<Product>
     {
         private readonly WebSkladDbContext _context;
-        private readonly IMapper _mapper;
 
         public ProductRepository(WebSkladDbContext context)
         {

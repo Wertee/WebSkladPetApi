@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Domain.Entity;
 using Moq;
 
 namespace Tests.Outcome.ServiceTests
@@ -22,7 +23,7 @@ namespace Tests.Outcome.ServiceTests
                     Count = 2,
                     OutcomeDate = DateTime.Now,
                     ProductId = Guid.NewGuid(),
-                    ProductName = "Mouse",
+                    Product = new Product(),
                     Recipient = "Admin"
                 },
                 new Domain.Entity.Outcome()
@@ -31,7 +32,7 @@ namespace Tests.Outcome.ServiceTests
                     Count = 3,
                     OutcomeDate = DateTime.Now,
                     ProductId = Guid.NewGuid(),
-                    ProductName = "Keyboard",
+                    Product = new Product(),
                     Recipient = "Admin"
                 }
             };
@@ -54,7 +55,7 @@ namespace Tests.Outcome.ServiceTests
                 Id = Guid.NewGuid(),
                 Count = 10,
                 ProductId = Guid.NewGuid(),
-                ProductName = "Test",
+                Product = new Product(),
                 OutcomeDate = DateTime.Now,
                 Recipient = "Test"
             };
