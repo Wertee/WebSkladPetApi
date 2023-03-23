@@ -1,5 +1,4 @@
-﻿
-namespace Application.Interfaces
+﻿namespace Application.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -9,5 +8,6 @@ namespace Application.Interfaces
         void Update(T entityToUpdate);
         void Delete(T entityToDelete);
         bool IsExist(Guid id);
+        void Detach(T entity);
     }
 }

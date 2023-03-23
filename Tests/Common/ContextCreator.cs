@@ -1,5 +1,4 @@
-﻿
-using Application.Common.Mapping;
+﻿using Application.Common.Mapping;
 using Application.Product.Services;
 using AutoMapper;
 using Infrastructure;
@@ -20,7 +19,6 @@ namespace Tests.Common
             var context = new WebSkladDbContext(options);
             context.Database.EnsureCreated();
             ProductsContextFactory.Create(context);
-            CategoryContextFactory.Create(context);
 
             return context;
         }

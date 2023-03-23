@@ -2,11 +2,11 @@
 
 namespace Application.Product.Validation
 {
-    public abstract class ProductValidation
+    public class ProductValidation
     {
         private readonly Domain.Entity.Product _product;
 
-        protected ProductValidation(Domain.Entity.Product product)
+        public ProductValidation(Domain.Entity.Product product)
         {
             _product = product;
         }
@@ -15,7 +15,7 @@ namespace Application.Product.Validation
         {
             if (_product.Count <= 0)
             {
-                throw new ProductValidationException("Count less or equal 0");
+                throw new ProductValidationException("Количество должно быть больше нуля");
             }
         }
 

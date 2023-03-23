@@ -1,5 +1,4 @@
-﻿
-namespace Application.Outcome.DTO
+﻿namespace Application.Outcome.DTO
 {
     public class OutcomeDTO
     {

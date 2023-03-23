@@ -46,5 +46,10 @@ namespace Infrastructure.Repository
         {
             return _context.Products.Any(x => x.Id == id);
         }
+
+        public void Detach(Product entity)
+        {
+            _context.Entry(entity).State = EntityState.Detached;
+        }
     }
 }

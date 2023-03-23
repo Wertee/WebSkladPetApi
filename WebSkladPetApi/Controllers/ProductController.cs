@@ -19,7 +19,7 @@ namespace WebSkladPetApi.Controllers
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<ProductDTO>>> Get()
         {
-            var productsDto = await _service.Get();
+            var productsDto = await _service.GetAllAsync();
             return Ok(productsDto);
         }
 
@@ -43,7 +43,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Create(productDto);
+                await _service.CreateAsync(productDto);
                 return Ok();
             }
             catch (ProductValidationException exception)
@@ -57,7 +57,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Update(productDto);
+                await _service.UpdateAsync(productDto);
                 return Ok();
             }
             catch (ProductValidationException exception)
@@ -75,7 +75,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (ProductNotFoundException exception)

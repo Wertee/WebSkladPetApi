@@ -17,14 +17,14 @@ namespace Application.Category.Services
             _mapper = mapper;
         }
 
-        public async Task<List<CategoryDTO>> Get()
+        public async Task<List<CategoryDTO>> GetAllAsync()
         {
             var category = await _uof.CategoryRepository.GetAllAsync();
             var categoryDto = _mapper.Map<List<Domain.Entity.Category>, List<CategoryDTO>>(category);
             return categoryDto;
         }
 
-        public async Task<CategoryDTO> Get(Guid id)
+        public async Task<CategoryDTO> GetByIdAsync(Guid id)
         {
             var category = await _uof.CategoryRepository.GetByIdAsync(id);
             if (category == null)
@@ -33,7 +33,7 @@ namespace Application.Category.Services
             return categoryDto;
         }
 
-        public async Task Create(CategoryDTO categoryDto)
+        public async Task CreateAsync(CategoryDTO categoryDto)
         {
             //validation
             var categoryValidation = new CategoryValidation(categoryDto);
@@ -43,7 +43,7 @@ namespace Application.Category.Services
             await _uof.SaveAsync();
         }
 
-        public async Task Update(CategoryDTO categoryDto)
+        public async Task UpdateAsync(CategoryDTO categoryDto)
         {
             //validation
             var categoryValidation = new CategoryValidation(categoryDto);
@@ -53,14 +53,14 @@ namespace Application.Category.Services
             await _uof.SaveAsync();
         }
 
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var category = await _uof.CategoryRepository.GetByIdAsync(id);
             if (category == null)
                 throw new CategoryNotFoundException("Category not found");
 
             var products = await _uof.ProductRepository.GetAllAsync();
-            int countOfConnectedProducts = products.Count(x => x.Category == category);
+            int countOfConnectedProducts = products.Count(x => x.CategoryId == category.Id);
             if (countOfConnectedProducts > 0)
                 throw new CategoryValidationException("Number of products with this category more than 0");
             _uof.CategoryRepository.Delete(category);

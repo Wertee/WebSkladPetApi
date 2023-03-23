@@ -6,13 +6,10 @@ using Application.Interfaces;
 using Application.Outcome.Services;
 using Application.Product.Services;
 using Application.User.Services;
-using Domain.Entity;
 using Infrastructure;
 using Infrastructure.Initialization;
 using Infrastructure.Repository;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.EntityFrameworkCore;
 using IAuthenticationService = Application.Interfaces.IAuthenticationService;
 
@@ -54,6 +51,8 @@ namespace WebSkladPetApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            //builder.Services.AddDbContext<WebSkladDbContext>(options => options.UseSqlServer("Data Source=ATOMSKILLS;Initial Catalog=WebSkladPetApi;User ID=sa;Password=6811400;Integrated Security=true;"));
+            //builder.Services.AddDbContext<WebSkladUsersContext>(options => options.UseSqlServer("Data Source=ATOMSKILLS;Initial Catalog=WebSkladPetUsersApi;User ID=sa;Password=6811400;Integrated Security=true;"));
             builder.Services.AddDbContext<WebSkladDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApi;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             builder.Services.AddDbContext<WebSkladUsersContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebSkladPetApiUsers;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             builder.Services.AddScoped<IProductService, ProductService>();

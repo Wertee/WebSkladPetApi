@@ -16,7 +16,7 @@ namespace Tests.ProductTests.ServiceTests
         {
             //Arrange
             //Act
-            await Service.Delete(ProductsContextFactory.ProductIdForDelete);
+            await Service.DeleteAsync(ProductsContextFactory.ProductIdForDelete);
 
             //Assert
             Assert.Null(Context.Products.SingleOrDefault(x => x.Id == ProductsContextFactory.ProductIdForDelete));
@@ -27,7 +27,7 @@ namespace Tests.ProductTests.ServiceTests
             //Arrange
             //Act
             //Assert
-            await Assert.ThrowsAsync<ProductNotFoundException>(async () => await Service.Delete(Guid.NewGuid()));
+            await Assert.ThrowsAsync<ProductNotFoundException>(async () => await Service.DeleteAsync(Guid.NewGuid()));
         }
     }
 }

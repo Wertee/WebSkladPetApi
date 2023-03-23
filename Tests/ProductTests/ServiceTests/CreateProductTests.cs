@@ -32,7 +32,7 @@ namespace Tests.ProductTests.ServiceTests
             };
 
             //Act
-            await Service.Create(newProductDto);
+            await Service.CreateAsync(newProductDto);
 
             //Assert
             Assert.NotNull(Context.Products.SingleOrDefault(x => x.Name == newProductDto.Name && x.Description == newProductDto.Description));

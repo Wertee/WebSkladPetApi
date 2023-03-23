@@ -18,7 +18,7 @@ namespace Tests.ProductTests.ServiceTests
     public class GetProductTests : TestProductServices
     {
         private readonly ProductService _service;
-        private readonly Mock<IProductRepository> _productRepoMock = new Mock<IProductRepository>();
+        private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
         private readonly IMapper _mapper;
 
         public GetProductTests()
@@ -28,14 +28,14 @@ namespace Tests.ProductTests.ServiceTests
                 cfg.AddProfile<DataAccessMappingProfile>();
             });
             _mapper = mapperConfiguration.CreateMapper();
-            _service = new ProductService(_mapper, _productRepoMock.Object);
+            _service = new ProductService(_mapper, _unitOfWorkMock.Object);
         }
         [Fact]
         public async Task GetAllProducts_Success()
         {
             //Arrange
             //Act
-            var productDtoList = await Service.Get();
+            var productDtoList = await Service.GetAllAsync();
             //Assert
             Assert.Equal(2, productDtoList.Count);
         }
@@ -62,16 +62,25 @@ namespace Tests.ProductTests.ServiceTests
                     Description = "Клавиатура Оклик",
                     Id = Guid.Parse("E8582C8E-3099-487D-9AC8-B30E9A40FF30"),
                     Name = "Клавиатура"
+                },
+                new Product()
+                {
+                    CanBeGiven = true,
+                    CategoryId = Guid.Parse("5502E6E8-02CB-43C2-B777-8AB395FEBC22"),
+                    Count = 3,
+                    Description = "Клавиатура Оклик 123",
+                    Id = Guid.Parse("E8582C8E-3099-487D-9AC8-B30E9A40FF30"),
+                    Name = "Клавиатура"
                 }
             };
 
-            _productRepoMock.Setup(x => x.GetAllAsync()).ReturnsAsync(mockProducts);
+            _unitOfWorkMock.Setup(x => x.ProductRepository.GetAllAsync()).ReturnsAsync(mockProducts);
 
             //Act
-            var products = await _service.Get();
+            var products = await _service.GetAllAsync();
 
             //Assert
-            Assert.Equal(2, products.Count);
+            Assert.Equal(3, products.Count);
         }
         [Fact]
         public async Task GetByIdAsync_Success()
@@ -81,13 +90,13 @@ namespace Tests.ProductTests.ServiceTests
             var product = new Product()
             {
                 CanBeGiven = true,
-                CategoryId = Guid.Parse("DE8F25E4-E5BE-4982-A7C2-BF8EDFDCA01B"),
+                CategoryId = Guid.Parse("DE8F25E4-E5BE-4982-A7C2-BF8EDFDCA000"),
                 Count = 5,
                 Description = "Мышь Оклик",
                 Id = productId,
                 Name = "Мышь",
             };
-            _productRepoMock.Setup(x => x.GetByIdAsync(productId)).ReturnsAsync(product);
+            _unitOfWorkMock.Setup(x => x.ProductRepository.GetByIdAsync(productId)).ReturnsAsync(product);
             //Act
             var productDto = await _service.GetByIdAsync(productId);
             //Assert
@@ -99,10 +108,9 @@ namespace Tests.ProductTests.ServiceTests
         {
             //Arrange
             var productId = Guid.NewGuid();
-            _productRepoMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
+            _unitOfWorkMock.Setup(x => x.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(() => null);
 
             //Act
-
             //Assert
             await Assert.ThrowsAsync<ProductNotFoundException>(async () => await _service.GetByIdAsync(productId));
         }

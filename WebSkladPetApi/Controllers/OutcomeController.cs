@@ -19,7 +19,7 @@ namespace WebSkladPetApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OutcomeDTO>>> Get()
         {
-            var outcomeDto = await _service.Get();
+            var outcomeDto = await _service.GetAllAsync();
             return Ok(outcomeDto);
         }
 
@@ -28,7 +28,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                var outcomeDto = await _service.Get(id);
+                var outcomeDto = await _service.GetByIdAsync(id);
                 return outcomeDto;
             }
             catch (OutcomeNotFoundException exception)
@@ -42,7 +42,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Create(outcomeDto);
+                await _service.CreateAsync(outcomeDto);
                 return Ok();
             }
             catch (Exception exception)
@@ -56,7 +56,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Update(outcomeDto);
+                await _service.UpdateAsync(outcomeDto);
                 return Ok();
             }
             catch (Exception exception)
@@ -70,7 +70,7 @@ namespace WebSkladPetApi.Controllers
         {
             try
             {
-                await _service.Delete(id);
+                await _service.DeleteAsync(id);
                 return Ok();
             }
             catch (Exception exception)

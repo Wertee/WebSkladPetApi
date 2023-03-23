@@ -1,24 +1,26 @@
-﻿using Application.Category.Services;
-using Application.Common.Mapping;
-using Application.Interfaces;
-using Application.Product.Services;
-using AutoMapper;
+﻿using Application.Interfaces;
 using Domain.Entity;
-using Infrastructure;
-using Infrastructure.Repository;
-using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Common.Mapping;
+using Application.Outcome.Services;
+using AutoMapper;
 
-namespace Tests.Category
+namespace Tests.Outcome
 {
-    public abstract class CategoryTestsBase
+    public class OutcomeTestsBase
     {
-        protected readonly CategoryService Service;
+        protected OutcomeService Service;
         protected readonly Mock<IUnitOfWork> UnitOfWorkMock = new();
         protected readonly Mock<IRepository<Domain.Entity.Category>> CategoryRepoMock = new();
         protected readonly Mock<IRepository<Product>> ProductRepoMock = new();
+        protected readonly Mock<IRepository<Domain.Entity.Outcome>> OutcomeRepoMock = new();
         protected readonly IMapper Mapper;
-        protected CategoryTestsBase()
+        public OutcomeTestsBase()
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
@@ -26,11 +28,12 @@ namespace Tests.Category
             });
             Mapper = mapperConfiguration.CreateMapper();
 
+            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository).Returns(OutcomeRepoMock.Object);
             UnitOfWorkMock.Setup(uow => uow.CategoryRepository).Returns(CategoryRepoMock.Object);
             UnitOfWorkMock.Setup(uow => uow.ProductRepository).Returns(ProductRepoMock.Object);
             UnitOfWorkMock.Setup(uow => uow.SaveAsync()).Returns(Task.CompletedTask);
 
-            Service = new CategoryService(UnitOfWorkMock.Object, Mapper);
+            Service = new OutcomeService(UnitOfWorkMock.Object, Mapper);
         }
     }
 }

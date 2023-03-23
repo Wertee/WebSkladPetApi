@@ -4,10 +4,10 @@ namespace Application.Interfaces
 {
     public interface IOutcomeService
     {
-        Task<List<OutcomeDTO>> Get();
-        Task<OutcomeDTO> Get(Guid id);
-        Task Create(OutcomeDTO productDto);
-        Task Update(OutcomeDTO productDto);
-        Task Delete(Guid id);
+        Task<List<OutcomeDTO>> GetAllAsync();
+        Task<OutcomeDTO> GetByIdAsync(Guid id);
+        Task CreateAsync(OutcomeDTO productDto);
+        Task UpdateAsync(OutcomeDTO productDto);
+        Task DeleteAsync(Guid id);
     }
 }
