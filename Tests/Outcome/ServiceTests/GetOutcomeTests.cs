@@ -15,27 +15,7 @@ namespace Tests.Outcome.ServiceTests
         public async Task GetAllAsync_Succsess()
         {
             //Arrange
-            List<Domain.Entity.Outcome> outcomes = new List<Domain.Entity.Outcome>()
-            {
-                new Domain.Entity.Outcome()
-                {
-                    Id = Guid.NewGuid(),
-                    Count = 2,
-                    OutcomeDate = DateTime.Now,
-                    ProductId = Guid.NewGuid(),
-                    Product = new Product(),
-                    Recipient = "Admin"
-                },
-                new Domain.Entity.Outcome()
-                {
-                    Id = Guid.NewGuid(),
-                    Count = 3,
-                    OutcomeDate = DateTime.Now,
-                    ProductId = Guid.NewGuid(),
-                    Product = new Product(),
-                    Recipient = "Admin"
-                }
-            };
+            List<Domain.Entity.Outcome> outcomes = new List<Domain.Entity.Outcome>() { OutcomeField };
 
             UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetAllAsync()).ReturnsAsync(outcomes);
 

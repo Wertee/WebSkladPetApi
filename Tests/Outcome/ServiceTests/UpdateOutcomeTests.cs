@@ -16,32 +16,13 @@ namespace Tests.Outcome.ServiceTests
         public void UpdateAsync_Succsess()
         {
             //Arrange
-            var outcome = new Domain.Entity.Outcome()
-            {
-                Id = Guid.NewGuid(),
-                Count = 2,
-                ProductId = Guid.NewGuid(),
-                Product = new Product(),
-                OutcomeDate = DateTime.Now,
-                Recipient = "Test"
-            };
 
-            var product = new Product()
-            {
-                CanBeGiven = true,
-                CategoryId = Guid.Parse("DE8F25E4-E5BE-4982-A7C2-BF8EDFDCA01B"),
-                Count = 5,
-                Description = "Мышь Оклик",
-                Id = Guid.Parse("F02A40F3-F869-43E9-83E0-9F6396B8E119"),
-                Name = "Мышь"
-            };
-
-            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product);
+            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(ProductField);
             UnitOfWorkMock.Setup(uow => uow.ProductRepository.IsExist(It.IsAny<Guid>())).Returns(true);
-            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(outcome);
+            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(OutcomeField);
             UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.IsExist(It.IsAny<Guid>())).Returns(true);
 
-            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
+            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(OutcomeField);
 
             //Act
             var taskResult = Service.UpdateAsync(outcomeDto).IsCompletedSuccessfully;
@@ -55,32 +36,12 @@ namespace Tests.Outcome.ServiceTests
         {
             //Arrange
 
-            var product = new Product()
-            {
-                CanBeGiven = true,
-                CategoryId = Guid.Parse("DE8F25E4-E5BE-4982-A7C2-BF8EDFDCA01B"),
-                Count = 5,
-                Description = "Мышь Оклик",
-                Id = Guid.Parse("F02A40F3-F869-43E9-83E0-9F6396B8E119"),
-                Name = "Мышь"
-            };
-
-            var outcome = new Domain.Entity.Outcome()
-            {
-                Id = Guid.NewGuid(),
-                Count = 2,
-                ProductId = Guid.NewGuid(),
-                Product = product,
-                OutcomeDate = DateTime.Now,
-                Recipient = "Test"
-            };
-
-            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product);
+            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(ProductField);
             UnitOfWorkMock.Setup(uow => uow.ProductRepository.IsExist(It.IsAny<Guid>())).Returns(true);
-            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(outcome);
+            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(OutcomeField);
             UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.IsExist(It.IsAny<Guid>())).Returns(false);
 
-            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
+            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(OutcomeField);
 
             //Act
             //Assert
@@ -91,32 +52,13 @@ namespace Tests.Outcome.ServiceTests
         public async Task UpdateAsync_FailOnWrongProductId()
         {
             //Arrange
-            var product = new Product()
-            {
-                CanBeGiven = true,
-                CategoryId = Guid.Parse("DE8F25E4-E5BE-4982-A7C2-BF8EDFDCA01B"),
-                Count = 5,
-                Description = "Мышь Оклик",
-                Id = Guid.Parse("F02A40F3-F869-43E9-83E0-9F6396B8E119"),
-                Name = "Мышь"
-            };
 
-            var outcome = new Domain.Entity.Outcome()
-            {
-                Id = Guid.NewGuid(),
-                Count = 2,
-                ProductId = Guid.NewGuid(),
-                Product = product,
-                OutcomeDate = DateTime.Now,
-                Recipient = "Test"
-            };
-
-            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(product);
+            UnitOfWorkMock.Setup(uow => uow.ProductRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(ProductField);
             UnitOfWorkMock.Setup(uow => uow.ProductRepository.IsExist(It.IsAny<Guid>())).Returns(false);
-            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(outcome);
+            UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(OutcomeField);
             UnitOfWorkMock.Setup(uow => uow.OutcomeRepository.IsExist(It.IsAny<Guid>())).Returns(true);
 
-            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(outcome);
+            var outcomeDto = Mapper.Map<Domain.Entity.Outcome, OutcomeDTO>(OutcomeField);
 
             //Act
             //Assert
