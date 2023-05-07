@@ -1,6 +1,8 @@
 ﻿using Application.Exceptions;
 using Application.Interfaces;
 using Application.Product.DTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebSkladPetApi.Controllers
@@ -16,7 +18,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<List<ProductDTO>>> Get()
         {
             var productsDto = await _service.GetAllAsync();
@@ -24,6 +26,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<ProductDTO>> Get(Guid id)
         {
             try
@@ -39,6 +42,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Post(ProductDTO productDto)
         {
             try
@@ -53,6 +57,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Put(ProductDTO productDto)
         {
             try
@@ -71,6 +76,7 @@ namespace WebSkladPetApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Delete(Guid id)
         {
             try
